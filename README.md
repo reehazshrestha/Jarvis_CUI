@@ -20,15 +20,17 @@ pip install pyttsx3 SpeechRecognition langchain_ollama langchain_core slowprint
 
 Additionally, make sure to install Ollama by following the instructions on their official website.
 
-Usage:
+## Usage:
+
 Here's how the code works:
 
 1.It listens to the microphone input and recognizes the spoken questions.
 2.It processes the input using the Ollama language model to generate responses.
 3.The assistant responds with text-to-speech.
 
-Code Explanation:
+## Code Explanation:
 
+```
 import pyttsx3.voice
 import speech_recognition
 import pyttsx3
@@ -88,7 +90,8 @@ while True:
         print(f"Request error {e}")
     except Exception as e:
         print(f"Error: {e}")
-Note:
+```
+## Note:
 
 The response to your prompt might be delayed depending on the processing time.
 
