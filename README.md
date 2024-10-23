@@ -24,9 +24,9 @@ Additionally, make sure to install Ollama by following the instructions on their
 
 Here's how the code works:
 
-1.It listens to the microphone input and recognizes the spoken questions. 
-2.It processes the input using the Ollama language model to generate responses. 
-3.The assistant responds with text-to-speech. 
+1.It listens to the microphone input and recognizes the spoken questions.  
+2.It processes the input using the Ollama language model to generate responses.   
+3.The assistant responds with text-to-speech.   
 
 ## Code Explanation:
 
