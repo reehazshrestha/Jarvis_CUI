@@ -1,4 +1,4 @@
-# Voice Assistant with Ollama
+# Jarvis The Voice Assistant with Ollama
 
 This project implements a voice assistant using the `Ollama` model. It listens to your questions and responds using text-to-speech.
 
