@@ -21,18 +21,24 @@ model = OllamaLLM(model="llama3.2")
 promt = ChatPromptTemplate.from_template(template)
 chain = promt | model
 recognizer = speech_recognition.Recognizer()
-
+listening = True
 
 context = ""
 
 def speak(text):
+    global listening
+
     engine = pyttsx3.init()
     voices = engine.getProperty('voices')
     engine.setProperty('voice', voices[3].id)
     engine.say(text)
     engine.runAndWait()
+    listening = True
 
 def print_and_say(text):
+    global listening
+
+    listening = False
     thread = threading.Thread(target=speak, args=(text,))
     thread.start()
     
@@ -40,19 +46,20 @@ def print_and_say(text):
 
 while True:
     try:
-        with speech_recognition.Microphone() as mic:
-            recognizer.adjust_for_ambient_noise(mic, duration=0.2)
-            print("Listening...")
-            audio = recognizer.listen(mic)
+        if listening: 
+            with speech_recognition.Microphone() as mic:
+                recognizer.adjust_for_ambient_noise(mic, duration=0.2)
+                print("Listening...")
+                audio = recognizer.listen(mic)
 
-            user_input = recognizer.recognize_google(audio)
-            print("You:", user_input)
+                user_input = recognizer.recognize_google(audio)
+                print("You:", user_input)
 
-            result = chain.invoke({"context": context, "question": user_input})
+                result = chain.invoke({"context": context, "question": user_input}).format()
+                
+                print_and_say(result)
             
-            print_and_say(result)
-           
-            context += f"\nUser: {user_input}\nJarvis: {result}"
+                context += f"\nUser: {user_input}\nJarvis: {result}"
             
 
     except speech_recognition.UnknownValueError:
