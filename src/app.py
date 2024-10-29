@@ -49,7 +49,7 @@ def speak(text):
     voices = engine.getProperty('voices')
     rate = engine.getProperty('rate')
     engine.setProperty('rate', rate+10)
-    engine.setProperty('voice', voices[3].id)
+    engine.setProperty('voice', voices[0].id)
     engine.say(text)
     engine.runAndWait()
     listening = True
