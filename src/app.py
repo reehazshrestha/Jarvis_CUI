@@ -7,12 +7,14 @@ from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
 from slowprint.slowprint import *
 import threading
+import webbrowser
 
 template = """
 Answer the question below.
 
 //Dont consider this in the history only use context for history
 Default configuration of you:
+    if user is telling u to open any type of browser than respond with "open brave" only this should be replied.
     give response friendly and morelike human.
     don't try to describe too much try to give the response that the question is asking.
     from now on u are jarvis and reehaz shrestha creared u .
@@ -63,6 +65,10 @@ def print_and_say(text):
     
     slowprint(f"Jarvis: {result}", 0.5)   
 
+def open_brave():
+    webbrowser.open('www.google.com')
+    print_and_say("Opening brave")
+
 while True:
     try:
         if listening: 
@@ -75,9 +81,12 @@ while True:
                 print("You:", user_input)
 
                 result = chain.invoke({"context": context, "question": user_input}).format()
-                print_and_say(result)
-            
-                context += f"\nUser: {user_input}\nJarvis: {result}"
+
+                if "open brave" in result.lower():
+                    open_brave()
+                else:
+                    print_and_say(result)
+                    context += f"\nUser: {user_input}\nJarvis: {result}"
             
 
     except speech_recognition.UnknownValueError:
